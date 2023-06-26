@@ -32,18 +32,10 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {{ Request::is('gudang') ? 'active' : '' }}" aria-current="page" href="/gudang">
-              <i class="nav-icon fas fa-th"></i>
+            <a class="nav-link {{ Request::is('user') ? 'active' : '' }}" aria-current="page" href="/user">
+              <i class="nav-icon fas fa-user"></i>
               <p>
-                Gudang
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link {{ Request::is('part') ? 'active' : '' }}" aria-current="page" href="/part">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Part
+                Karyawan
               </p>
             </a>
           </li>
@@ -51,15 +43,15 @@
             <a class="nav-link {{ Request::is('user') ? 'active' : '' }}" aria-current="page" href="/user">
               <i class="nav-icon fas fa-user"></i>
               <p>
-                User
+                Jabatan
               </p>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {{ Request::is('project') ? 'active' : '' }}" aria-current="page" href="/project">
-              <i class="nav-icon fas fa-asterisk"></i>
+            <a class="nav-link {{ Request::is('user') ? 'active' : '' }}" aria-current="page" href="/user">
+              <i class="nav-icon fas fa-user"></i>
               <p>
-                Project
+                Kriteria
               </p>
             </a>
           </li>

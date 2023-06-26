@@ -18,8 +18,8 @@
 <div class="login-box">
   <div class="login-logo">
     <a href="/">
-      <b>Sisi</b>
-      <p class="text-muted">Sistem Informasi Shop</p>
+      <b>System</b>
+      <p class="text-muted">Sistem Pendukung Keputusan Pemilihan pejabat struktural PNS</p>
     </a>
   </div>
   <!-- /.login-logo -->
