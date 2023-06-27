@@ -18,7 +18,6 @@ class DashboardController extends Controller
         $position = Position::all()->count();
         $criteria = Criteria::all()->count();
         $user_id = auth()->user()->id;
-        // dd($user_id);
         $data = Employee::with(['position', 'position.position'])->where('user_id', $user_id)->first();
         return view('superadmin.dashboard.index', compact('user', 'employee', 'position', 'criteria', 'data'));
     }

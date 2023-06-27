@@ -36,7 +36,7 @@
               </p>
             </a>
           </li>
-          @if(count($data->position) < 1)
+          @if($data == null)
           <li class="nav-item">
             <a class="nav-link {{ Request::is('employee') ? 'active' : '' }}" aria-current="page" href="/employee">
               <i class="nav-icon fas fa-users"></i>

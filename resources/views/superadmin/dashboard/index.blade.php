@@ -30,7 +30,7 @@
     <section class="content">
       <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
-        @if(count($data->position) > 0)
+        @if(count(($data->position ?? [])) > 0)
         <table class="table table-stiped">
             <tr>
                 <th>No</th>
