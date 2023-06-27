@@ -30,14 +30,32 @@
     <section class="content">
       <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
+        @if(count($data->position) > 0)
+        <table class="table table-stiped">
+            <tr>
+                <th>No</th>
+                <th>Nama Jabatan</th>
+                <th>Periode</th>
+                <th>Status</th>
+            </tr>
+            @foreach ($data->position as $item)
+            <tr>
+                <td>{{$loop->iteration}}</td>
+                <td>{{$item->position?->name ?? '-'}}</td>
+                <td>{{$item->start_period.' - '. $item->end_period}}</td>
+                <td><button title="{{$item->status == 'active' ? 'Non Aktifkan' : 'Aktifkan'}}" class="btn {{$item->status == 'active' ? 'btn-primary' : 'btn-danger'}}">{{$item->status}}</button></td>
+            </tr>
+            @endforeach
+        </table>
+        @else
         <div class="row">
           <div class="col-lg-4 col-6">
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>{{$user}}</h3>
+                <h3>{{$criteria}}</h3>
 
-                <p>Karyawan</p>
+                <p>Kriteria</p>
               </div>
               <div class="icon">
                 <i class="ion ion-person-add"></i>
@@ -50,9 +68,9 @@
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>{{$gudang}}</h3>
+                <h3>{{$employee}}</h3>
 
-                <p>Kriteria</p>
+                <p>Karyawan</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
@@ -65,9 +83,9 @@
             <!-- small box -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>{{$part}}</h3>
+                <h3>{{$position}}</h3>
 
-                <p>Part</p>
+                <p>Jabatan</p>
               </div>
               <div class="icon">
                 <i class="ion ion-bag"></i>
@@ -79,15 +97,10 @@
 
           <!-- ./col -->
         </div>
+        @endif
         <!-- /.row -->
-        <!-- Main row -->
-        <div class="row">
-          <!-- Left col -->
-
-                      </section>
-          <!-- /.Left col -->
-          <!-- right col (We are only adding the ID to make the widgets sortable)-->
-
+        </div>
+    </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->

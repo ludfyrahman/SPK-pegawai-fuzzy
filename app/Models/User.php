@@ -47,4 +47,10 @@ class User extends Authenticatable
     public $fillable = [
         'name', 'username', 'email', 'password'
     ];
+
+
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class);
+    }
 }

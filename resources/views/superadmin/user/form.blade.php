@@ -46,54 +46,38 @@
       </div>
       <div class="mb-3">
         <label for="name" class="form-label">password</label>
-        <input type="text" {{ $data->type == 'detail' ? 'disabled' : ''}} value='{{$data->password ?? old('password')}}' class="form-control @error('password') is-invalid @enderror" id="password" name="password" required autofocus>
+        <input type="password" {{ $data->type == 'detail' ? 'disabled' : ''}} value='' class="form-control @error('password') is-invalid @enderror" id="password" name="password" required autofocus>
         @error('password')
         <div class="invalid-feedback">
           {{ $message }}
         </div>
         @enderror
       </div>
+      <div class="mb-3">
+        <label for="name" class="form-label">Karyawan</label>
+        @php
+            $typeActive = $data->employee_id ?? old('employee_id');
+        @endphp
+        <select name="employee_id" id="" class="form-control" {{ $data->type == 'detail' ? 'disabled' : ''}} >
+            <option value="">Pilih Karyawan</option>
+            @foreach ($employee as $g)
+                <option {{$typeActive == $g->id ? 'selected': ''}} value="{{$g->id}}">{{$g->nama}}</option>
+            @endforeach
+        </select>
+        @error('position_type')
+        <div class="invalid-feedback">
+          {{ $message }}
+        </div>
+        @enderror
+    </div>
       @if($data->type != 'detail')
-      <button type="submit" class="btn btn-primary">Tambahkan</button>
+      <button type="submit" class="btn btn-primary">Simpan</button>
       <button type="reset" class="btn btn-danger">Reset</button>
-      @else
-        <a href="{{route('gudang.edit', $data->id)}}"><button type="button" class="btn btn-primary">Edit</button></a>
+      @elseif($data->type == 'edit')
+        <a href="{{route('user.edit', $data->id)}}"><button type="button" class="btn btn-primary">Edit</button></a>
       @endif
-        <a href="{{route('gudang.index')}}"><button type="button" class="btn btn-dark">Kembali</button></a>
+        <a href="{{route('user.index')}}"><button type="button" class="btn btn-dark">Kembali</button></a>
   </form>
-  {{-- @if($data->type == 'detail')
-    <h3 class="mt-2">Data Detail di{{$data->nama}}</h3>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Name</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse ($users as $user)
-
-            <tr>
-              <td>{{ $loop->iteration }}</td>
-              <td>{{ $user->name}}</td>
-              <td>{{ $user->username }}</td>
-              <td>{{ $user->email }}</td>
-              <td>
-                  <a href="{{ route('user.show', $user->id)}}" class="badge bg-primary"><span data-feather="eye"></span></a>
-                  <a href="{{route('user.edit', $user->id)}}" class="badge bg-warning"><span data-feather="edit"></span></a>
-              </td>
-            </tr>
-            @empty
-                <tr>
-                    <td colspan="6" class="text-center"><i>Data yang anda butuhkan belum tersedia</i></td>
-                </tr>
-            @endforelse
-          </tbody>
-    </table>
-  @endif --}}
 
 </div>
 @endsection

@@ -1,5 +1,10 @@
 
 <!-- Sidebar Menu -->
+@php
+    $user_id = auth()->user()->id;
+        // dd($user_id);
+    $data = \App\Models\Employee::with(['position', 'position.position'])->where('user_id', $user_id)->first();
+@endphp
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
@@ -31,9 +36,10 @@
               </p>
             </a>
           </li>
+          @if(count($data->position) < 1)
           <li class="nav-item">
-            <a class="nav-link {{ Request::is('user') ? 'active' : '' }}" aria-current="page" href="/user">
-              <i class="nav-icon fas fa-user"></i>
+            <a class="nav-link {{ Request::is('employee') ? 'active' : '' }}" aria-current="page" href="/employee">
+              <i class="nav-icon fas fa-users"></i>
               <p>
                 Karyawan
               </p>
@@ -43,19 +49,27 @@
             <a class="nav-link {{ Request::is('user') ? 'active' : '' }}" aria-current="page" href="/user">
               <i class="nav-icon fas fa-user"></i>
               <p>
+                User
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {{ Request::is('position') ? 'active' : '' }}" aria-current="page" href="{{ route('position.index') }}">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
                 Jabatan
               </p>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {{ Request::is('user') ? 'active' : '' }}" aria-current="page" href="/user">
-              <i class="nav-icon fas fa-user"></i>
+            <a class="nav-link {{ Request::is('criteria') ? 'active' : '' }}" aria-current="page" href="{{ route('criteria.index') }}">
+              <i class="nav-icon fas fa-list"></i>
               <p>
                 Kriteria
               </p>
             </a>
           </li>
-
+          @endif
           <li class="nav-item">
           <div class="navbar-nav">
             <div class="nav-item text-nowrap">

@@ -15,7 +15,7 @@
 @endif
 
 <div class="table-responsive col-lg-12 mb-5">
-    <a href="{{route('project.create')}}" class="btn btn-secondary mb-3 shadow">+ Tambah Data</a>
+    <a href="{{route('employee.create')}}" class="btn btn-secondary mb-3 shadow">+ Tambah Data</a>
     <table class="table table-striped table-sm">
       <thead>
         <tr>
@@ -27,7 +27,7 @@
           <th scope="col">Tmt CPNS</th>
           <th scope="col">Tmt Golongan</th>
           <th scope="col">Tingkat Pendidikan</th>
-
+        <th scope="col">Aksi</th>
         </tr>
       </thead>
       <tbody>
@@ -42,9 +42,9 @@
           <td>{{ $project->tmt_golongan }}</td>
           <td>{{ $project->tingkat_pendidikan }}</td>
           <td>
-              <a href="{{ route('project.show', $project->id)}}" class="badge bg-primary">Detail</a>
-              <a href="{{route('project.edit', $project->id)}}" class="badge bg-warning">Edit</a>
-              <form action="{{route('project.destroy', $project->id)}}" method="post" class="d-inline">
+              <a href="{{ route('employee.show', $project->id)}}" class="badge bg-primary">Detail</a>
+              <a href="{{route('employee.edit', $project->id)}}" class="badge bg-warning">Edit</a>
+              <form action="{{route('employee.destroy', $project->id)}}" method="post" class="d-inline">
                 @method('delete')
                 @csrf
                 <button class="badge bg-danger border-0" onclick="return confirm ('Are you sure ?')">Delete</button>

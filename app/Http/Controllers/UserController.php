@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-
+use App\Models\Employee;
+use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     /**
@@ -37,7 +38,8 @@ class UserController extends Controller
             'type'          => 'create',
             'route'         => route('user.store')
         ];
-        return view('superadmin.user.form', compact('title', 'data'));
+        $employee = Employee::all();
+        return view('superadmin.user.form', compact('title', 'data', 'employee'));
     }
 
     /**
@@ -57,13 +59,16 @@ class UserController extends Controller
         ]);
 
         try {
+            $employee_id = $request->employee_id;
             User::create([
                 'name' => $request->name,
                 'username' => $request->username,
                 'email' => $request->email,
-                'password' => $request->password,
-
+                'password' => Hash::make($request->password),
             ]);
+            if($employee_id){
+                Employee::where('id', $employee_id)->update(['user_id' => User::latest()->first()->id]);
+            }
             return redirect('user')->with('success', 'Berhasil menambah data!');
         } catch (\Throwable $th) {
             return back()->with('failed', 'Gagal menambah data!'.$th->getMessage());
@@ -79,10 +84,13 @@ class UserController extends Controller
     public function show($id)
     {
         $data = User::where('id', $id)->first();
+        $employee = Employee::where('user_id', $id)->first();
+        $data->employee_id = $employee->id ?? null;
         $data->route = route('user.index');
         $data->type = 'detail';
         $title = 'Detail Data User';
-        return view('superadmin.user.form', compact('data', 'title'));
+        $employee = Employee::all();
+        return view('superadmin.user.form', compact('data', 'title', 'employee'));
     }
 
     /**
@@ -95,9 +103,12 @@ class UserController extends Controller
     {
         //
         $data = User::where('id', $id)->first();
+        $employee = Employee::where('user_id', $id)->first();
+        $data->employee_id = $employee->id ?? null;
         $data->route = route('user.update', $id);
         $title = 'Edit Data User';
-        return view('superadmin.user.form', compact('data', 'title'));
+        $employee = Employee::all();
+        return view('superadmin.user.form', compact('data', 'title', 'employee'));
     }
 
     /**
@@ -122,10 +133,14 @@ class UserController extends Controller
                 'email' => $request->email,
             ]);
 
+            if($request->password){
+                $data['password'] = Hash::make($request->password);
+            }
+
             User::where('id', $id)->update($data);
             return redirect('user')->with('success', 'Berhasil mengubah data!');
         } catch (\Throwable $th) {
-            return back()->with('failed', 'Gagal mengubah data!');
+            return back()->with('failed', 'Gagal mengubah data!'.$th->getMessage());
         }
     }
 

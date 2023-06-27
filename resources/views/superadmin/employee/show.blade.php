@@ -24,7 +24,7 @@
         <div class="invalid-feedback">
           {{ $message }}
         </div>
-        @enderror  
+        @enderror
       </div>
       <div class="mb-3">
           <label for="name" class="form-label">Nip Lama</label>
@@ -202,9 +202,9 @@
       <button type="submit" class="btn btn-primary">Simpan</button>
       <button type="reset" class="btn btn-danger">Reset</button>
       @else
-        <a href="{{route('part.edit', $data->id)}}"><button type="button" class="btn btn-primary">Edit</button></a>
+        <a href="{{route('employee.edit', $data->id)}}"><button type="button" class="btn btn-primary">Edit</button></a>
       @endif
-      <a href="{{route('part.index')}}"><button type="button" class="btn btn-dark">Kembali</button></a>
+      <a href="{{route('employee.index')}}"><button type="button" class="btn btn-dark">Kembali</button></a>
   </form>
 
 
