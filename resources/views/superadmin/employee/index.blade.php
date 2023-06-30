@@ -27,6 +27,8 @@
           <th scope="col">Tmt CPNS</th>
           <th scope="col">Tmt Golongan</th>
           <th scope="col">Tingkat Pendidikan</th>
+          <th scope="col">Unit Kerja Tujuan</th>
+          <th scope="col">Jabatan Tujuan</th>
         <th scope="col">Aksi</th>
         </tr>
       </thead>
@@ -41,6 +43,8 @@
           <td>{{ $project->tmt_cpns }}</td>
           <td>{{ $project->tmt_golongan }}</td>
           <td>{{ $project->tingkat_pendidikan }}</td>
+          <td>{{ $project->unit_kerja_target }}</td>
+          <td>{{ $project->position_target }}</td>
           <td>
               <a href="{{ route('employee.show', $project->id)}}" class="badge bg-primary">Detail</a>
               <a href="{{route('employee.edit', $project->id)}}" class="badge bg-warning">Edit</a>

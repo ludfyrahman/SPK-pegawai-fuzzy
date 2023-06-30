@@ -25,7 +25,7 @@ class EmployeeController extends Controller
     {
         //
         $data = Employee::all();
-        $title = 'List Data Karyawan';
+        $title = 'List Data Pegawai';
 
         return view('superadmin.employee.index', compact('data', 'title'));
     }
@@ -38,7 +38,7 @@ class EmployeeController extends Controller
     public function create()
     {
         //
-        $title = 'Tambah Data Karyawan';
+        $title = 'Tambah Data Pegawai';
         $data = (object)[
             'nip_lama'               => '',
             'nip_baru'               => '',
@@ -91,6 +91,8 @@ class EmployeeController extends Controller
             'lokasi_kerja_nama' => 'required',
             'unit_kerja' => 'required',
             'instansi' => 'required',
+            'unit_kerja_target' => 'required',
+            'position_target' => 'required',
         ]);
 
         try {
@@ -110,6 +112,8 @@ class EmployeeController extends Controller
                 'lokasi_kerja_nama' => $request->lokasi_kerja_nama,
                 'unit_kerja' => $request->unit_kerja,
                 'instansi' => $request->instansi,
+                'unit_kerja_target' => $request->unit_kerja_target,
+                'position_target' => $request->position_target,
             ]);
             return redirect('employee')->with ('Berhasil menambah data!');
         } catch (\Throwable $th) {
@@ -129,7 +133,7 @@ class EmployeeController extends Controller
         $position = Position::all();
         $data->route = route('employee.index');
         $data->type = 'detail';
-        $title = 'Detail Data Karyawan';
+        $title = 'Detail Data Pegawai';
         $project = Employee::all();
 
         // code aslinya
@@ -141,7 +145,7 @@ class EmployeeController extends Controller
         //
         $data = Employee::where('id', $id)->first();
         $data->route = route('employee.update', $id);
-        $title = 'Edit Data Karyawan';
+        $title = 'Edit Data Pegawai';
         return view('superadmin.employee.form', compact('data', 'title'));
     }
 
@@ -192,6 +196,8 @@ class EmployeeController extends Controller
             'lokasi_kerja_nama' => 'required',
             'unit_kerja' => 'required',
             'instansi' => 'required',
+            'unit_kerja_target' => 'required',
+            'position_target' => 'required',
 
         ]);
         try {
@@ -211,6 +217,8 @@ class EmployeeController extends Controller
                 'lokasi_kerja_nama' => $request->lokasi_kerja_nama,
                 'unit_kerja' => $request->unit_kerja,
                 'instansi' => $request->instansi,
+                'unit_kerja_target' => $request->unit_kerja_target,
+                'position_target' => $request->position_target,
             ]);
 
             Employee::where('id', $id)->update($data);

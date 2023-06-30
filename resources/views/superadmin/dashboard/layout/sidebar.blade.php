@@ -53,7 +53,7 @@
               </p>
             </a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item d-none">
             <a class="nav-link {{ Request::is('position') ? 'active' : '' }}" aria-current="page" href="{{ route('position.index') }}">
               <i class="nav-icon fas fa-table"></i>
               <p>
@@ -61,7 +61,7 @@
               </p>
             </a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item d-none">
             <a class="nav-link {{ Request::is('criteria') ? 'active' : '' }}" aria-current="page" href="{{ route('criteria.index') }}">
               <i class="nav-icon fas fa-list"></i>
               <p>

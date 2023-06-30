@@ -147,6 +147,25 @@
                 @enderror
             </div>
 
+            <div class="mb-3">
+                <label for="name" class="form-label">Unit Kerja Tujuan</label>
+                <input type="text" {{ $data->type == 'detail' ? 'disabled' : ''}} value='{{$data->unit_kerja_target ?? old('unit_kerja_target')}}' class="form-control @error('unit_kerja_target') is-invalid @enderror" id="unit_kerja_target" name="unit_kerja_target" required autofocus>
+                @error('unit_kerja_target')
+                <div class="invalid-feedback">
+                  {{ $message }}
+                </div>
+                @enderror
+            </div>
+            <div class="mb-3">
+                <label for="name" class="form-label">Jabatan yang dituju</label>
+                <input type="text" {{ $data->type == 'detail' ? 'disabled' : ''}} value='{{$data->position_target ?? old('position_target')}}' class="form-control @error('position_target') is-invalid @enderror" id="position_target" name="position_target" required autofocus>
+                @error('position_target')
+                <div class="invalid-feedback">
+                  {{ $message }}
+                </div>
+                @enderror
+            </div>
+
             @if($data->type != 'detail')
             <button type="submit" class="btn btn-primary">Simpan</button>
             <button type="reset" class="btn btn-danger">Reset</button>

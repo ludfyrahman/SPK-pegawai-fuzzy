@@ -28,6 +28,8 @@ class Employee extends Model
         'lokasi_kerja_nama',
         'unit_kerja',
         'instansi',
+        'unit_kerja_target',
+        'position_target',
     ];
 
     public $timestamps = false;
