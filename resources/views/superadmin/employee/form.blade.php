@@ -203,25 +203,6 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label for="">Periode</label>
-                               <div class="row">
-                                    <div class="col-md-6">
-                                        <input type="date" name="start_period" class="form-control" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input type="date" name="end_period" class="form-control" required>
-                                    </div>
-                               </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="">Status</label>
-                                <select name="status" id="" class="form-control" required>
-                                    <option value="">Pilih Status</option>
-                                    <option value="active">Aktif</option>
-                                    <option value="inactive">Tidak Aktif</option>
-                                </select>
-                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -235,15 +216,15 @@
                 <tr>
                     <th>No</th>
                     <th>Nama Jabatan</th>
-                    <th>Periode</th>
-                    <th>Status</th>
+                    <th>Skor</th>
+                    <th>Rank</th>
                 </tr>
                 @foreach ($data->position as $item)
                 <tr>
                     <td>{{$loop->iteration}}</td>
                     <td>{{$item->position?->name ?? '-'}}</td>
-                    <td>{{$item->start_period.' - '. $item->end_period}}</td>
-                    <td><button title="{{$item->status == 'active' ? 'Non Aktifkan' : 'Aktifkan'}}" class="btn {{$item->status == 'active' ? 'btn-primary' : 'btn-danger'}}">{{$item->status}}</button></td>
+                    <td>{{$item->weight ?? 0}}</td>
+                    <td>{{ $item->rank ?? 0 }}</td>
                 </tr>
                 @endforeach
             </table>

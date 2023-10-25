@@ -229,24 +229,20 @@ class EmployeeController extends Controller
     }
 
     public function storeEmployee(Request $request, $id){
-        // dd($request->toArray());
+
         $request->validate([
+            // validation position id if exist with user_id
             'position_id' => 'required',
-            'start_period' => 'required',
-            'end_period' => 'required',
-            'status' => 'required',
+            'user_id' => 'required',
         ]);
 
         try {
             PositionDetail::create([
                 'user_id' => $id,
                 'position_id' => $request->position_id,
-                'start_period' => $request->start_period,
-                'end_period' => $request->end_period,
-                'status' => $request->status,
                 'created_at' => now(),
             ]);
-            return redirect(route('employee.edit', $id))->with('success', 'Berhasil menambah data!');
+            return redirect(route('employee.show', $id))->with('success', 'Berhasil menambah data!');
         } catch (\Throwable $th) {
             return back()->with('failed', 'Gagal menambah data!'.$th->getMessage());
         }
@@ -263,5 +259,12 @@ class EmployeeController extends Controller
         //
         Employee::find($id)->delete();
         return redirect('employee')->with('success', 'Berhasil hapus data!');
+    }
+
+    public function weightedProduct(){
+        // show weighted product method calculate
+        $data = Employee::all();
+        $title = 'List Data Pegawai';
+        
     }
 }

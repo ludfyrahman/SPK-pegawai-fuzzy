@@ -31,15 +31,7 @@
             </div>
             <div class="mb-3">
                 <label for="name" class="form-label">Jenis Jabatan</label>
-                @php
-                    $typeActive = $data->position_type ?? old('position_type');
-                @endphp
-                <select name="position_type" id="" class="form-control" {{ $data->type == 'detail' ? 'disabled' : ''}} required>
-                    <option value="">Pilih Jenis Jabatan</option>
-                    @foreach ($positions as $g)
-                        <option {{$typeActive == $g ? 'selected': ''}} value="{{$g}}">{{$g}}</option>
-                    @endforeach
-                </select>
+                <input type="text" {{ $data->type == 'detail' ? 'disabled' : ''}} value='{{$data->position_type ?? old('position_type')}}' class="form-control @error('position_type') is-invalid @enderror" id="position_type" name="position_type" required autofocus>
                 @error('position_type')
                 <div class="invalid-feedback">
                   {{ $message }}

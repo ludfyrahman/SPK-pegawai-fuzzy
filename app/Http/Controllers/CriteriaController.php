@@ -35,6 +35,7 @@ class CriteriaController extends Controller
         $data = (object)[
             'name'                   => '',
             'description'            => '',
+            'weight'            => '',
             'type'                   => 'create',
             'route'                  => route('criteria.store')
         ];
@@ -53,12 +54,14 @@ class CriteriaController extends Controller
         $request->validate([
             'name'                   => 'required',
             'description'            => 'required',
+            'weight'            => 'required',
 
         ]);
 
         try {
             Criteria::create([
                 'name'                   => $request->name,
+                'weight'            => $request->weight,
                 'description'            => $request->description,
                 'created_at'             => date('Y-m-d H:i:s'),
                 'updated_at'             => date('Y-m-d H:i:s'),
@@ -130,19 +133,21 @@ class CriteriaController extends Controller
         $request->validate([
             'name'                   => 'required',
             'description'            => 'required',
+            'weight'            => 'required',
 
         ]);
         try {
             $data = ([
                 'name'                   => $request->name,
                 'description'            => $request->description,
+                'weight'                 => $request->weight,
                 'updated_at'             => date('Y-m-d H:i:s'),
             ]);
 
             Criteria::where('id', $id)->update($data);
             return redirect('criteria')->with('success', 'Berhasil mengubah data!');
         } catch (\Throwable $th) {
-            return back()->with('failed', 'Gagal mengubah data!');
+            return back()->with('failed', 'Gagal mengubah data!'.$th->getMessage());
         }
     }
 }

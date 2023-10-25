@@ -36,12 +36,36 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link {{ Request::is('criteria') ? 'active' : '' }}" aria-current="page" href="{{ route('criteria.index') }}">
+              <i class="nav-icon fas fa-list"></i>
+              <p>
+                Kriteria
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {{ Request::is('position') ? 'active' : '' }}" aria-current="page" href="{{ route('position.index') }}">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+                Jabatan
+              </p>
+            </a>
+          </li>
           @if($data == null)
           <li class="nav-item">
             <a class="nav-link {{ Request::is('employee') ? 'active' : '' }}" aria-current="page" href="/employee">
               <i class="nav-icon fas fa-users"></i>
               <p>
                 Karyawan
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {{ Request::is('plotting') ? 'active' : '' }}" aria-current="page" href="/plotting">
+              <i class="nav-icon fas fa-users"></i>
+              <p>
+                Plotting
               </p>
             </a>
           </li>
@@ -53,22 +77,8 @@
               </p>
             </a>
           </li>
-          <li class="nav-item d-none">
-            <a class="nav-link {{ Request::is('position') ? 'active' : '' }}" aria-current="page" href="{{ route('position.index') }}">
-              <i class="nav-icon fas fa-table"></i>
-              <p>
-                Jabatan
-              </p>
-            </a>
-          </li>
-          <li class="nav-item d-none">
-            <a class="nav-link {{ Request::is('criteria') ? 'active' : '' }}" aria-current="page" href="{{ route('criteria.index') }}">
-              <i class="nav-icon fas fa-list"></i>
-              <p>
-                Kriteria
-              </p>
-            </a>
-          </li>
+
+
           @endif
           <li class="nav-item">
           <div class="navbar-nav">

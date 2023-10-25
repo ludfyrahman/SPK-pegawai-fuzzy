@@ -21,30 +21,24 @@
               @method('PUT')
           @endif
             <div class="mb-3">
-              <label for="name" class="form-label">Nama Kriteria</label>
-              <input type="text" {{ $data->type == 'detail' ? 'disabled' : ''}} value='{{$data->name ?? old('name')}}' class="form-control @error('name') is-invalid @enderror" id="name" name="name" required autofocus>
-              @error('name')
+              <label for="name" class="form-label">Deskripsi</label>
+              <input type="text" {{ $data->type == 'detail' ? 'disabled' : ''}} value='{{$data->description ?? old('description')}}' class="form-control @error('description') is-invalid @enderror" id="description" name="description" required autofocus>
+              @error('description')
               <div class="invalid-feedback">
                 {{ $message }}
               </div>
               @enderror
             </div>
             <div class="mb-3">
-                <label for="name" class="form-label">Bobot Kriteria</label>
-                <input type="text" {{ $data->type == 'detail' ? 'disabled' : ''}} value='{{$data->weight ?? old('weight')}}' class="form-control @error('weight') is-invalid @enderror" id="weight" name="weight" required autofocus>
-                @error('weight')
-                <div class="invalid-feedback">
-                  {{ $message }}
-                </div>
-                @enderror
+              <label for="name" class="form-label">Skor</label>
+              <input type="number" min="1" {{ $data->type == 'detail' ? 'disabled' : ''}} value='{{$data->weight ?? old('weight')}}' class="form-control @error('weight') is-invalid @enderror" id="weight" name="weight" required autofocus>
+              @error('weight')
+              <div class="invalid-feedback">
+                {{ $message }}
               </div>
-            <div class="mb-3">
-              <label for="deskripsi" class="form-label">Keterangan</label>
-              @error('description')
-              <p class="text-danger"> {{ $message }}</p>
               @enderror
-              <textarea class="form-control"  {{ $data->type == 'detail' ? 'disabled' : ''}} name="description" id="description" cols="30" rows="10">{{$data->description ?? old('description')}}</textarea>
             </div>
+
             @if($data->type != 'detail')
             <button type="submit" class="btn btn-primary">Simpan</button>
             <button type="reset" class="btn btn-danger">Reset</button>

@@ -21,39 +21,67 @@
               @method('PUT')
           @endif
             <div class="mb-3">
-              <label for="name" class="form-label">Nama Kriteria</label>
-              <input type="text" {{ $data->type == 'detail' ? 'disabled' : ''}} value='{{$data->name ?? old('name')}}' class="form-control @error('name') is-invalid @enderror" id="name" name="name" required autofocus>
-              @error('name')
+              <label for="name" class="form-label">Karyawan</label>
+                @php
+                    $employeeActive = $data->employee_id ?? old('employee_id');
+                @endphp
+                <select name="employee_id" id="" class="form-control" {{ $data->type == 'detail' ? 'disabled' : ''}} required>
+                    <option value="">Pilih Karyawan</option>
+                    @foreach ($employee as $g)
+                        <option {{$employeeActive == $g->id ? 'selected': ''}} value="{{$g->id}}">{{$g->nama}}</option>
+                    @endforeach
+                </select>
+              @error('employee_id')
               <div class="invalid-feedback">
                 {{ $message }}
               </div>
               @enderror
             </div>
             <div class="mb-3">
-                <label for="name" class="form-label">Bobot Kriteria</label>
-                <input type="text" {{ $data->type == 'detail' ? 'disabled' : ''}} value='{{$data->weight ?? old('weight')}}' class="form-control @error('weight') is-invalid @enderror" id="weight" name="weight" required autofocus>
-                @error('weight')
+                <label for="name" class="form-label">Posisi</label>
+                  @php
+                      $positionActive = $data->position_id ?? old('position_id');
+                  @endphp
+                  <select name="position_id" id="" class="form-control" {{ $data->type == 'detail' ? 'disabled' : ''}} required>
+                      <option value="">Pilih Posisi</option>
+                      @foreach ($position as $g)
+                          <option {{$positionActive == $g->id ? 'selected': ''}} value="{{$g->id}}">{{$g->name}}</option>
+                      @endforeach
+                  </select>
+                @error('employee_id')
                 <div class="invalid-feedback">
                   {{ $message }}
                 </div>
                 @enderror
               </div>
-            <div class="mb-3">
-              <label for="deskripsi" class="form-label">Keterangan</label>
-              @error('description')
-              <p class="text-danger"> {{ $message }}</p>
-              @enderror
-              <textarea class="form-control"  {{ $data->type == 'detail' ? 'disabled' : ''}} name="description" id="description" cols="30" rows="10">{{$data->description ?? old('description')}}</textarea>
-            </div>
+              <div class="row mb-3">
+                @foreach ($criterias as $criteria)
+                <div class="col-md-6">
+                    <label for="name" class="form-label">{{$criteria->name}}</label>
+                    <select name="criteria[{{$criteria->id}}]" id="" class="form-control" {{ $data->type == 'detail' ? 'disabled' : ''}} required>
+                        <option value="">Pilih Opsi</option>
+                        @foreach ($criteria->criteriaDetail as $g)
+                            <option value="{{$g->weight}}">{{$g->description}}</option>
+                        @endforeach
+                    </select>
+                    @error('employee_id')
+                    <div class="invalid-feedback">
+                    {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+                @endforeach
+              </div>
+
             @if($data->type != 'detail')
             <button type="submit" class="btn btn-primary">Simpan</button>
             <button type="reset" class="btn btn-danger">Reset</button>
             @elseif ($data->type == 'edit')
-              <a href="{{route('criteria.edit', $data->id)}}"><button type="button" class="btn btn-primary">Edit</button></a>
+              <a href="{{route('plotting.edit', $data->id)}}"><button type="button" class="btn btn-primary">Edit</button></a>
             @else
-                <a href="{{route('detail-criteria.index', ['id' => $data->id])}}"><button type="button" class="btn btn-primary">Detail Kriteria</button></a>
+                <a href="{{route('detail-plotting.index', ['id' => $data->id])}}"><button type="button" class="btn btn-primary">Detail Kriteria</button></a>
             @endif
-            <a href="{{route('criteria.index')}}"><button type="button" class="btn btn-dark">Kembali</button></a>
+            <a href="{{route('plotting.index')}}"><button type="button" class="btn btn-dark">Kembali</button></a>
         </form>
       </div>
     </div>

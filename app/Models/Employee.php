@@ -43,4 +43,9 @@ class Employee extends Model
     {
         return $this->hasMany(PositionDetail::class, 'user_id', 'id');
     }
+
+    public function plottingPosition()
+    {
+        return $this->hasOne(PlottingPosition::class, 'employee_id', 'id');
+    }
 }

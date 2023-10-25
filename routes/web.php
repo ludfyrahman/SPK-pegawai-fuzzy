@@ -8,7 +8,9 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CriteriaController;
 use App\Http\Controllers\PositionController;
+use App\Http\Controllers\DetailCriteriaController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PlottingController;
 use App\Http\Controllers\ProjectController;
 /*
 |--------------------------------------------------------------------------
@@ -34,10 +36,13 @@ Route::post('/storeEmployee/{id}', [EmployeeController::class, 'storeEmployee'])
 
 // Dashboard
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
+Route::get('/plotting-calculation', [PlottingController::class, 'calculation'])->name('plotting.calculation');
+Route::resource('plotting', PlottingController::class);
 Route::resource('position', PositionController::class);
 Route::resource('user', UserController::class);
 Route::resource('employee', EmployeeController::class);
 Route::resource('criteria', CriteriaController::class);
+Route::resource('detail-criteria', DetailCriteriaController::class);
 Route::post('importData', [PartController::class, 'importData'])->name('importData');
 Route::post('importData', [ProjectController::class, 'importData'])->name('importData');
 Route::resource('history', HistoryController::class);
