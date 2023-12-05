@@ -104,21 +104,22 @@ class DetailCriteriaController extends Controller
     {
         //
         $request->validate([
-            'name'                   => 'required',
+            'weight'                 => 'required',
             'description'            => 'required',
-
         ]);
         try {
             $data = ([
-                'name'                   => $request->name,
+                'weight'                 => $request->weight,
                 'description'            => $request->description,
                 'updated_at'             => date('Y-m-d H:i:s'),
             ]);
             $parent = $request->id;
             Criteria::where('id', $id)->update($data);
-            return redirect(route('detail-criteria', ['id' => $parent]))->with('success', 'Berhasil mengubah data!');
+            $find = Criteria::where('id', $id)->first();
+            return redirect(route('detail-criteria.index', ['id' => $find->criteria_id]))->with('success', 'Berhasil mengubah data!');
         } catch (\Throwable $th) {
-            return back()->with('failed', 'Gagal mengubah data!');
+
+            return back()->with('failed', 'Gagal mengubah data!'.$th->getMessage());
         }
     }
 

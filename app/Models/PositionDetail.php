@@ -11,13 +11,15 @@ class PositionDetail extends Model
     protected $table = 'position_detail';
     protected $fillable = [
         'position_id',
-        'user_id',
-        'start_period',
-        'end_period',
-        'status',
+        'criteria_detail_id',
+        'weight'
     ];
 
     public function position(){
         return $this->belongsTo(Position::class);
+    }
+
+    public function criteriaDetail(){
+        return $this->belongsTo(Criteria::class, 'criteria_detail_id');
     }
 }

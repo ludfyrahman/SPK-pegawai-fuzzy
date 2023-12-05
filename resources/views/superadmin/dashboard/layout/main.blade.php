@@ -16,7 +16,7 @@
   <!-- iCheck -->
   <link rel="stylesheet" href="{{ asset('adminlte') }}/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- JQVMap -->
-  <link rel="stylesheet" href="{{ asset('adminlte') }}/plugins/jqvmap/jqvmap.min.css">
+  {{-- <link rel="stylesheet" href="{{ asset('adminlte') }}/plugins/jqvmap/jqvmap.min.css"> --}}
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('adminlte') }}/dist/css/adminlte.min.css">
   <!-- overlayScrollbars -->
@@ -115,6 +115,7 @@
 <!-- jQuery -->
 <script src="{{ asset('adminlte') }}/plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
+@stack('scripts')
 <script src="{{ asset('adminlte') }}/plugins/jquery-ui/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
@@ -127,8 +128,8 @@
 <!-- Sparkline -->
 <script src="{{ asset('adminlte') }}/plugins/sparklines/sparkline.js"></script>
 <!-- JQVMap -->
-<script src="{{ asset('adminlte') }}/plugins/jqvmap/jquery.vmap.min.js"></script>
-<script src="{{ asset('adminlte') }}/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+{{-- <script src="{{ asset('adminlte') }}/plugins/jqvmap/jquery.vmap.min.js"></script>
+<script src="{{ asset('adminlte') }}/plugins/jqvmap/maps/jquery.vmap.usa.js"></script> --}}
 <!-- jQuery Knob Chart -->
 <script src="{{ asset('adminlte') }}/plugins/jquery-knob/jquery.knob.min.js"></script>
 <!-- daterangepicker -->
@@ -157,6 +158,7 @@
 <!-- AdminLTE for demo purposes -->
 {{-- <script src="{{ asset('adminlte') }}/dist/js/demo.js"></script> --}}
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+
 <script src="{{ asset('adminlte') }}/dist/js/pages/dashboard.js"></script>
 <script>
     $(function(){
@@ -166,5 +168,6 @@
       }).buttons().container().appendTo('.dataTables_wrapper .col-md-6:eq(0)');
     })
 </script>
+
 </body>
 </html>

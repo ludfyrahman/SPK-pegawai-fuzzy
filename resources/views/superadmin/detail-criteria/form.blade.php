@@ -31,7 +31,7 @@
             </div>
             <div class="mb-3">
               <label for="name" class="form-label">Skor</label>
-              <input type="number" min="1" {{ $data->type == 'detail' ? 'disabled' : ''}} value='{{$data->weight ?? old('weight')}}' class="form-control @error('weight') is-invalid @enderror" id="weight" name="weight" required autofocus>
+              <input type="number" step="any" {{ $data->type == 'detail' ? 'disabled' : ''}} value='{{$data->weight ?? old('weight')}}' class="form-control @error('weight') is-invalid @enderror" id="weight" name="weight" required autofocus>
               @error('weight')
               <div class="invalid-feedback">
                 {{ $message }}

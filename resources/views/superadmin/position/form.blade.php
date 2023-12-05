@@ -38,6 +38,24 @@
                 </div>
                 @enderror
             </div>
+            <div class="row mb-3">
+                @foreach ($criterias as $key => $criteria)
+                <div class="col-md-6">
+                    <label for="name" class="form-label">{{$criteria->name}}</label>
+                    <select name="criteria[{{$criteria->id}}]" id="" class="form-control" {{ $data->type == 'detail' ? 'disabled' : ''}} required>
+                        <option value="">Pilih Opsi</option>
+                        @foreach ($criteria->criteriaDetail as $g)
+                            <option {{$data?->positionDetail[$key]?->weight ?? 0 == $g->weight ? 'selected' : ''}} value="{{$g->weight}}">{{$g->description}} </option>
+                        @endforeach
+                    </select>
+                    @error('employee_id')
+                    <div class="invalid-feedback">
+                    {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+                @endforeach
+              </div>
 
             @if($data->type != 'detail')
             <button type="submit" class="btn btn-primary">Simpan</button>

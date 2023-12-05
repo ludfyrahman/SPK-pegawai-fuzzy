@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Position;
+use App\Models\Criteria;
+use App\Models\PositionDetail;
+// import db
+use Illuminate\Support\Facades\DB;
 class PositionController extends Controller
 {
      //
@@ -30,6 +34,7 @@ class PositionController extends Controller
     {
         //
         $title = 'Tambah Data Jabatan';
+        $criterias = Criteria::with('criteriaDetail')->get();
         $data = (object)[
             'name'                   => '',
             'description'            => '',
@@ -37,7 +42,7 @@ class PositionController extends Controller
             'route'                  => route('position.store')
         ];
         $positions              = ['fungsional', 'struktural'];
-        return view('superadmin.position.form', compact('title', 'data', 'positions'));
+        return view('superadmin.position.form', compact('title', 'data', 'positions','criterias'));
     }
 
     /**
@@ -54,15 +59,20 @@ class PositionController extends Controller
             'position_type'            => 'required',
 
         ]);
-
         try {
-            Position::create([
+            $position = Position::create([
                 'name'                   => $request->name,
-
                 'position_type'            => $request->position_type,
                 'created_at'             => date('Y-m-d H:i:s'),
                 'updated_at'             => date('Y-m-d H:i:s'),
             ]);
+            foreach ($request->criteria as $key => $criteria) {
+                PositionDetail::create([
+                    'position_id'           => $position->id,
+                    'criteria_detail_id'    => $key,
+                    'weight'                => $criteria,
+                ]);
+            }
             return redirect('position')->with ('Berhasil menambah data!');
         } catch (\Throwable $th) {
             return back()->with('failed', 'Gagal menambah data!'.$th->getMessage());
@@ -82,19 +92,21 @@ class PositionController extends Controller
         $data->type = 'detail';
         $title = 'Detail Data Jabatan';
         $Jabatan = Position::all();
-
+        $criterias = Criteria::with('criteriaDetail')->get();
         // code aslinya
-        return view('superadmin.position.form', compact('id', 'data', 'title'));
+        return view('superadmin.position.form', compact('id', 'data', 'title','criterias'));
     }
 
     public function edit($id)
     {
         //
-        $data = Position::where('id', $id)->first();
+        $data = Position::with(['positionDetail'])->find($id);
         $data->route = route('position.update', $id);
         $title = 'Edit Data Jabatan';
+        $criterias = Criteria::with('criteriaDetail')->get();
         $positions  = ['fungsional', 'struktural'];
-        return view('superadmin.position.form', compact('data', 'title', 'positions'));
+        // dd($data->toArray(), $criterias->toArray());
+        return view('superadmin.position.form', compact('data', 'title', 'positions','criterias'));
     }
 
 
@@ -105,7 +117,6 @@ class PositionController extends Controller
 
         // menangkap file excel
         $file = $request->file('file');
-
         // membuat nama file unik
         // $nama_file = rand().$file->getClientOriginalName();
 
@@ -134,16 +145,37 @@ class PositionController extends Controller
 
         ]);
         try {
+            DB::beginTransaction();
             $data = ([
                 'name'                   => $request->name,
                 'position_type'            => $request->position_type,
                 'updated_at'             => date('Y-m-d H:i:s'),
             ]);
-
             Position::where('id', $id)->update($data);
+            PositionDetail::where('position_id', $id)->delete();
+            foreach ($request->criteria as $key => $criteria) {
+                PositionDetail::create([
+                    'position_id'           => $id,
+                    'criteria_detail_id'    => $key,
+                    'weight'                => $criteria,
+                ]);
+            }
+            DB::commit();
             return redirect('position')->with('success', 'Berhasil mengubah data!');
         } catch (\Throwable $th) {
-            return back()->with('failed', 'Gagal mengubah data!');
+            DB::rollback();
+            return back()->with('failed', 'Gagal mengubah data!'.$th->getMessage());
+        }
+    }
+
+    public function destroy($id)
+    {
+        //
+        try {
+            Position::where('id', $id)->delete();
+            return redirect('position')->with('success', 'Berhasil menghapus data!');
+        } catch (\Throwable $th) {
+            return back()->with('failed', 'Gagal menghapus data!');
         }
     }
 }

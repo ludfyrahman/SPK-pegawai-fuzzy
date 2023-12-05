@@ -150,4 +150,16 @@ class CriteriaController extends Controller
             return back()->with('failed', 'Gagal mengubah data!'.$th->getMessage());
         }
     }
+
+
+    public function destroy($id)
+    {
+        //
+        try {
+            Criteria::where('id', $id)->delete();
+            return redirect('criteria')->with('success', 'Berhasil menghapus data!');
+        } catch (\Throwable $th) {
+            return back()->with('failed', 'Gagal menghapus data!'.$th->getMessage());
+        }
+    }
 }

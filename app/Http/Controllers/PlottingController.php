@@ -84,7 +84,7 @@ class PlottingController extends Controller
                 ]);
             }
             DB::commit();
-            return redirect('criteria')->with ('Berhasil menambah data!');
+            return redirect(route('plotting.index'))->with ('Berhasil menambah data!');
         } catch (\Throwable $th) {
             DB::rollback();
             return back()->with('failed', 'Gagal menambah data!'.$th->getMessage());
@@ -92,25 +92,35 @@ class PlottingController extends Controller
     }
 
     public function calculation(Request $request){
+        $positionDetail = PositionDetail::with(['position','criteriaDetail'])->where('position_id', $request->position_id)->get();
         $criteria = Criteria::with('plottingPositionDetail')->get();
         $employee = Employee::with(['plottingPosition', 'plottingPosition.plottingPositionDetail','plottingPosition.plottingPositionDetail.criteria'])->get();
-        $data = $this->calculationAction($employee);
-        // dd($data['score'][0]['plot']->toArray());
+        $data = $this->calculationAction($employee, $positionDetail,$request);
+        $positions = Position::with('positionDetail')->get();
         $title = 'Perhitungan Plotting Karyawan';
-        return view('superadmin.plotting.calculation', compact('title', 'criteria', 'employee', 'data'));
+        return view('superadmin.plotting.calculation', compact('title', 'criteria', 'employee', 'data', 'positions','request', 'positionDetail'));
     }
 
-    public function calculationAction($data){
+    public function calculationAction($data, $positionDetail, $request){
         $score = [];
         $value = -0.15;
         $vectorS = [];
         $vectorV = [];
         $total = 0;
+        $weight_fixing = [];
+        foreach ($positionDetail as $index => $d)
+        {
+            $weight_fixing[] = [
+                'name' => 'W'.$index+1,
+                'weight' => $d->weight / $positionDetail->sum('weight'),
+            ];
+        }
+        $weight_fixing_total = array_sum(array_column($weight_fixing, 'weight'));
         foreach ($data as $key => $d) {
             $childData = $d->plottingPosition?->plottingPositionDetail;
             if($childData!= null){
                 $score[] = ['name' => $d->nama, 'plot' => $childData];
-                $s = $this->calculationScore($childData);
+                $s = $this->calculationScore($childData, $weight_fixing);
                 $vectorS[] = $s;
                 $total += array_sum($s);
             }
@@ -118,28 +128,26 @@ class PlottingController extends Controller
         foreach ($vectorS as $key => $vector) {
             $vectorV[] = $this->calculationScoreV($vectorS[$key], $total);
         }
-        // ranking
-        // $rank = sort($vectorV);
         $rank = [];
         foreach ($vectorV as $key => $value) {
             $childRank = ['name' => $score[$key]['name'], 'value' => $value];
             $rank[] = $childRank;
         }
-        // dd($vectorV, $rank);
-        // rank sort by desc value
         usort($rank, function($a, $b) {
             return $b['value'] <=> $a['value'];
         });
         $result = ['score' => $score, 'vectorS' => $vectorS, 'vectorV' => $vectorV,'rank' => $rank, 'total' => $total];
         return $result;
     }
-    public function calculationScore($data){
+    public function calculationScore($data, $weight_fixing){
         $score = [];
         $all = Criteria::sum('weight');
+        // dd($data->toArray());
         foreach ($data as $key => $d) {
             $value = $d->criteria->weight / $all;
-            $score[] = $d->weight ** $value;
+            $score[] = $d->weight ** ($weight_fixing[$key]['weight'] ?? 0);
         }
+        // dd($score);
 
         return $score;
     }

@@ -13,4 +13,8 @@ class Position extends Model
         'name',
         'position_type'
     ];
+
+    public function positionDetail(){
+        return $this->hasMany(PositionDetail::class);
+    }
 }

@@ -33,7 +33,7 @@
           <td>{{ $part->weight }}</td>
 
           <td>
-              {{-- <a href="{{route('detail-criteria.edit', $part->id)}}" class="badge bg-warning">Edit</a> --}}
+              <a href="{{route('detail-criteria.edit', $part->id)}}" class="badge bg-warning">Edit</a>
               <form action="{{route('detail-criteria.destroy', $part->id)}}" method="post" class="d-inline">
                 @method('delete')
                 @csrf

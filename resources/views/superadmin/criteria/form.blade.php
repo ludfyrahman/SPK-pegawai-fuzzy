@@ -29,9 +29,9 @@
               </div>
               @enderror
             </div>
-            <div class="mb-3">
+            <div class="mb-3 d-none">
                 <label for="name" class="form-label">Bobot Kriteria</label>
-                <input type="text" {{ $data->type == 'detail' ? 'disabled' : ''}} value='{{$data->weight ?? old('weight')}}' class="form-control @error('weight') is-invalid @enderror" id="weight" name="weight" required autofocus>
+                <input type="test" {{ $data->type == 'detail' ? 'disabled' : ''}} value='1' class="form-control @error('weight') is-invalid @enderror" id="weight" name="weight" required autofocus>
                 @error('weight')
                 <div class="invalid-feedback">
                   {{ $message }}

@@ -2,7 +2,6 @@
 <!-- Sidebar Menu -->
 @php
     $user_id = auth()->user()->id;
-        // dd($user_id);
     $data = \App\Models\Employee::with(['position', 'position.position'])->where('user_id', $user_id)->first();
 @endphp
 <!-- Main Sidebar Container -->
