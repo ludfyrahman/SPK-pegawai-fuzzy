@@ -5,7 +5,7 @@
 @section('container')
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Kriteria</h1>
+    <h1 class="h2">{{$title}}</h1>
 </div>
 
 @if (session()->has('success'))
@@ -24,7 +24,7 @@
           <th scope="col">Nama Karyawan</th>
           <th scope="col">Jabatan yang dituju</th>
           {{-- <th scope="col">Nilai/Bobot</th> --}}
-          {{-- <th scope="col">Aksi</th> --}}
+          <th scope="col">Aksi</th>
 
         </tr>
       </thead>
@@ -36,15 +36,15 @@
           <td>{{ $part->position->name ?? '-' }}</td>
           {{-- <td>{{ $part->weight }}</td> --}}
 
-          {{-- <td> --}}
+          <td>
               {{-- <a href="{{ route('plotting.show', $part->id)}}" class="badge bg-primary">Detail</a> --}}
-              {{-- <a href="{{route('plotting.edit', $part->id)}}" class="badge bg-warning">Edit</a>
+              {{-- <a href="{{route('plotting.edit', $part->id)}}" class="badge bg-warning">Edit</a> --}}
               <form action="{{route('plotting.destroy', $part->id)}}" method="post" class="d-inline">
                 @method('delete')
                 @csrf
                 <button class="badge bg-danger border-0" onclick="return confirm ('Are you sure ?')">Delete</button>
-              </form> --}}
-          {{-- </td> --}}
+              </form>
+          </td>
         </tr>
 
         @endforeach
