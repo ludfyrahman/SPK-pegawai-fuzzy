@@ -32,8 +32,8 @@
         @foreach ($data as $part)
         <tr>
           <td>{{ $loop->iteration }}</td>
-          <td>{{ $part->employee->nama }}</td>
-          <td>{{ $part->position->name }}</td>
+          <td>{{ $part->employee->nama ?? '-' }}</td>
+          <td>{{ $part->position->name ?? '-' }}</td>
           {{-- <td>{{ $part->weight }}</td> --}}
 
           {{-- <td> --}}
